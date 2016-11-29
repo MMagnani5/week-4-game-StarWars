@@ -8,34 +8,43 @@
 	<!--Added a link to Asset Style Sheet -->
 	<link rel="stylesheet" type="text/css" href="asset/css/style.css">
 </head>
+
 <body>
-<div class="main-section-title"> Star Wars Game  </div>
+
+<div class="main-section-title">Star Wars RPG!</div>
   <div id="main-game-section">
-    <div class="section-title"> Your Character
+    <div id="characters-section">
+      <div class="section-title">Select Your Character</div>
     </div>
-    <div id="selected-character"></div>
+
+    <div id="selected-character-section">
+      <div class="section-title">Your Character</div>
+      <div id="selected-character"></div>
+    </div>
+
+    <div id="available-to-attack-section">
+      <div class="section-title">Enemies Available To Attack</div>
     </div>
 
     <div class="section-title">Fight Section</div>
     <div id="fight-section">
-    <button id="attack-button">Attack</button>
-  </div>
-  <div id="action">
-    <div class="character-section">
-    <div class="section-title">
-      Defender
+      <button id="attack-button">Attack</button>
     </div>
-    </di>
+
+    <div id="action">
+      <div class="character-section">
+        <div class="section-title">Defender</div>
+        <div id="defender"></div>
+      </div>
+    </div>
+
   </div>
-  
-  
-</div>
-
-
+  <div id="gameMessage"></div>
 
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 <script type="text/javascript" src="asset/javascript/game.js"> </script>
+
 </body>
 </html>

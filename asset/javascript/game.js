@@ -7,44 +7,40 @@ $(document).ready(function(){
 
 
 // Characters Variables
- var characterstats = {
+ var characters = {
 	 'Lukeskywalker': {
-			 name:"Luke Skywalker",
-			 attack:14,
-			 health:160,
-			 counterAtt:20,
-			 image:"<img src='assets/images/Luke_Skywalker.png'>",
-			 enemyAttackBack:30
+			 name: "Luke Skywalker",
+			 attack: 14,
+			 health: 160,
+			 imageUrl: "asset/images/Luke_Skywalker.png",
+			 enemyAttackBack: 30
 	},	 
 	'Hansolo': {
-			 name:"Han Solo",
-			 attack:10,
-			 health:120,
-			 counterAtt:25,
-			 image:"<img src='asset/images/lead_large.jpg'>",
-			 enemyAttackBack:40
+			 name: "Han Solo",
+			 attack: 10,
+			 health: 120,
+			 imageUrl: "asset/images/lead_large.jpg",
+			 enemyAttackBack: 40
 	},	 
 	'Darthvader': {
-		 name:"Darth Vader",
-		 attack:20,
-		 health:180,
-		 counterAtt:30,
-		 image:"<img src='assets/images/darth_vader_by_jasonsimart-d9cq3fj.jpg'>",
-		 enemyAttackBack:20
+		 name: "Darth Vader",
+		 attack: 20,
+		 health: 180,
+		 imageUrl: "asset/images/darth_vader_by_jasonsimart-d9cq3fj.jpg",
+		 enemyAttackBack: 20
 	},	 
 	'Kylo-Ren': {
-		 name:"Kylo Ren",
-		 attack:20,
-		 health:140,
-		 counterAtt:25,
-		 images: "<img src='Kylo-Ren-In-Star-Wars.jpg'>",
-		 enemyAttackBack:30
-	},
+		 name: "Kylo Ren",
+		 attack: 20,
+		 health: 140,
+		 imageUrl: "asset/images/Kylo-Ren-In-Star-Wars.jpg",
+		 enemyAttackBack: 30
+	}
 };
 
 var currentSelectCharacter;
 var currDefender;
-var attcker = [];
+var combatants = [];
 var indexOfSelChar;
 var turnCounter = 1;
 var killcount = 0;
@@ -72,9 +68,9 @@ var renderOne = function(character, renderArea, makeChar){
 
 // Create function to render game message to DOM
 
-var rnederMessage = function(message){
+var renderMessage = function(message){
 	var gameMessageSet = $("#gameMessage");
-	var newMessage = $("<div").text(message);
+	var newMessage = $("<div>").text(message);
 	gameMessageSet.append(newMessage);
 
 	if (message == 'clearMessage'){
@@ -159,7 +155,59 @@ $(document).on('click', '.character', function() {
 //----------------------------------
 // Create functions to enable actions bwt objects
 
+$("#attack-button").on("click", function(){
+	// if defender area has enemy
+	if ($('#defeneder').children().length !== 0){
+		// defender state change
+		var attackMessage = " You attacked " + currDefender.name + " for " + (currSelectedCharacter.attack * turnCounter) + " damage.";
+		renderMessage("cleanMessage");
+		// combat
+		currDefender.health = currDefender.health - (currSelectedCharacter.attack * turnCounter);
 
+		// win condition
+		if (currDefender.health > 0) {
+			// enemy not dead keep playing 
+			renderCharacters(currDefender, 'playerDamage');
+			// player state change 
+			var counterAttackMessage = currDefender.name + " attacked you back for " + currDefender.enemyAttackBack + " damage. ";
+			renderMessage(attackMessage);
+			renderMessage(counterAttackMessage);
+
+
+			currSelectedCharacter.health = currSelectedCharacter.health - currDefender.enemyAttackBack;
+			renderCharacters(currSelectedCharacter, 'enemyDamage');
+			if (currSelectedCharacter.health <= 0) {
+				renderMessage("clearMessage");
+				restartGame("You been defeated... GAME OVER!!");
+				$("#attack-button").unbind("click");
+			}
+		} else {
+			renderCharacters(currDefender, 'enemyDefeated');
+			killCount++;
+			if (killCount >= 3) {
+				renderMessage("clearMessage");
+				restartGame("You Won!! Game Over!!");
+			}
+		}
+		turnCounter++;
+	} else {
+		renderMessage("clearMessage");
+		renderMessage("No enemy here");
+
+	}
+});
+
+var restartGame = function(inputEndGame) {
+	// when restart button is clicked, reload the page
+	var restart = $('<button>Restart</button>').click(function(){
+		location.reload();
+	});
+	var gameState = $("<div>").text(inputEndGame);
+	$("body").append(gameState);
+	$("body").append(restart);
+};
+
+});
 
 
 
