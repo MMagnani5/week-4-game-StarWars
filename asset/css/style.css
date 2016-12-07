@@ -1,6 +1,6 @@
 body {
-	background: url('../images/returnofthejedi2.jpg') no-repeat center center fixed; 
-
+	background: url(../images/returnofthejedi2.jpg) no-repeat center center fixed; 
+  color: white;
 }
 
 img {
@@ -20,6 +20,7 @@ img {
 
 .action-section {
   margin: 15px 0px;
+
 }
 
 .main-section-title {
@@ -95,4 +96,8 @@ img {
 .target-enemy {
   background-color: black;
   color: white;
+}
+button {
+  background-color: red;
+
 }
